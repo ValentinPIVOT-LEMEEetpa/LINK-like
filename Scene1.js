@@ -4,36 +4,41 @@ class Scene1 extends Phaser.Scene{
 	}
 
 	init(data) {
-	var cursors;
-	var text = 1;
-	var lod;
+		var cursors;
+		var lod;
+		var un = 0;
+
 	}
 
 	preload(){
 
-	this.load.spritesheet('load', 'assets/loading/loading-WHITE-Sheet.png',{frameWidth: 600, frameHeight: 300});
+		this.load.spritesheet('loadi', 'assets/loading/loading-WHITE-Sheet.png',{frameWidth: 600, frameHeight: 300});
 	}
 
 	create(){
 		this.cursors = this.input.keyboard.createCursorKeys();
-		this.add.text(325, 300, "Loading game...");
+		//this.add.text(325, 300, "Loading game...");
+		//this.add.spritesheet(325, 300, "load");
 	
-		this.lod = this.scene.physics.add.sprite(600,0,'load');
+		this.lod = this.physics.add.sprite(400,300,'loadi');
 		this.lod.setCollideWorldBounds(true);
 	
 		this.anims.create({
 			key:'loading',
-			frames: this.anims.generateFrameNumbers('load', {start: 0, end: 18}),
-			frameRate: 2,
-			repeat: 1
+			frames: this.anims.generateFrameNumbers('loadi', {start: 0, end: 18}),
+			frameRate: 10,
+			
 		});
 		
 	}
 
 	update(){
-		if(this.text == 1){
-			//this.anims.start('load');
-			lod.anims.play('loading', true);
+		if(this.anims.frames == 18){
+				this.lod.anims.play('loading', true);
+			}else{
+				this.scene.start("playGame");
+			}	
 		}
-	}
 }
+
+//this.scene.start("");
