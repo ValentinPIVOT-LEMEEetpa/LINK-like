@@ -5,7 +5,7 @@ var config = {
 	physics: {
         default: 'arcade',
         arcade: {
-            gravity: { y: 0 },
+            gravity: { 0: 0 },
             debug: true
         }
     },
