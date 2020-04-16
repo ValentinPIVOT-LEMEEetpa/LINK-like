@@ -92,6 +92,7 @@ class Scene2 extends Phaser.Scene{
 		else{
 			this.player.anims.play('stop', true);
 			this.player.setVelocityX(0);
+			this.player.setVelocityY(0);
 		}
 	}
 }
