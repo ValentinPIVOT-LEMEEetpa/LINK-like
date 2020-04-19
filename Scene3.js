@@ -1,6 +1,6 @@
 class Scene3 extends Phaser.Scene{
 	constructor(){
-		super('2');
+		super('3');
 	}
 
 	init(data) {
@@ -12,7 +12,10 @@ class Scene3 extends Phaser.Scene{
 
 	preload(){
 		
-		this.load.image('background', 'assets/map/2.png');
+		this.load.image('background3', 'assets/map/3.png');
+		this.load.image('bord7', 'assets/bordure/LEFT&RIGHT.png');
+		this.load.image('bord8', 'assets/bordure/TOP&BOT.png');
+		this.load.image('bord9', 'assets/bordure/LEFT&RIGHT.png');
 
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -34,10 +37,17 @@ class Scene3 extends Phaser.Scene{
  */
 
 	create(){
-		this.add.image(400, 300, 'background');
+		this.add.image(400, 300, 'background3');
 
 
 		this.cursors = this.input.keyboard.createCursorKeys();
+
+		this.next = this.physics.add.staticGroup();
+		this.next.create(799,300,'bord7');
+		this.next2 = this.physics.add.staticGroup();
+		this.next2.create(400,599,'bord8');
+		this.next3 = this.physics.add.staticGroup();
+		this.next3.create(1,300,'bord9');
 
 		this.objet = this.physics.add.staticGroup();
 		//this.objet.create(255,100,'home').setScale(2).refreshBody();
@@ -47,6 +57,9 @@ class Scene3 extends Phaser.Scene{
 		this.player.setCollideWorldBounds(true);
 
 		this.physics.add.collider(this.player,this.objet);
+		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
+		this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
+		this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
 
 
 		this.anims.create({
@@ -168,5 +181,15 @@ class Scene3 extends Phaser.Scene{
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
 		}
+	}
+
+	nextScene(player, next){
+		this.scene.start("4");
+	}
+	next2Scene(player, next2){
+		this.scene.start("9");
+	}
+	next3Scene(player, next3){
+		this.scene.start("2");
 	}
 }

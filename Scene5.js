@@ -1,6 +1,6 @@
-class Scene2 extends Phaser.Scene{
+class Scene5 extends Phaser.Scene{
 	constructor(){
-		super('2');
+		super('5');
 	}
 
 	init(data) {
@@ -12,11 +12,10 @@ class Scene2 extends Phaser.Scene{
 
 	preload(){
 		
-		this.load.image('background2', 'assets/map/2.png');
-
-		this.load.image('bord4', 'assets/bordure/LEFT&RIGHT.png');
-		this.load.image('bord5', 'assets/bordure/LEFT&RIGHT.png');
-		//this.load.image('bord6', 'assets/bordure/');
+		this.load.image('background5', 'assets/map/5.png');
+		this.load.image('bord13', 'assets/bordure/LEFT&RIGHT.png');
+		this.load.image('bord14', 'assets/bordure/LEFT&RIGHT.png');
+		//this.load.image('bord15', 'assets/bordure/.png');
 
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -38,19 +37,17 @@ class Scene2 extends Phaser.Scene{
  */
 
 	create(){
-		this.add.image(400, 300, 'background2');
+		this.add.image(400, 300, 'background5');
 
 
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.next = this.physics.add.staticGroup();
-		this.next.create(799,300,'bord4');
+		this.next.create(1,300,'bord13');
 		this.next2 = this.physics.add.staticGroup();
-		this.next2.create(1,300,'bord5');
+		this.next2.create(799,300,'bord14');
 		/*this.next3 = this.physics.add.staticGroup();
-		this.next3.create(400,599,'bord6');*/
-
-
+		this.next3.create(,,'bord15');*/
 
 		this.objet = this.physics.add.staticGroup();
 		//this.objet.create(255,100,'home').setScale(2).refreshBody();
@@ -185,15 +182,13 @@ class Scene2 extends Phaser.Scene{
 			this.player.setVelocityY(0);
 		}
 	}
-
-
 	nextScene(player, next){
-		this.scene.start("3");
+		this.scene.start("4");
 	}
 	next2Scene(player, next2){
-		this.scene.start("1");
+		this.scene.start("6");
 	}
-	next3Scene(player, next3){
+	/*next3Scene(player, next3){
 		this.scene.start("");
-	}
+	}*/
 }

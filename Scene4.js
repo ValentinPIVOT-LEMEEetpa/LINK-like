@@ -1,6 +1,6 @@
-class Scene2 extends Phaser.Scene{
+class Scene4 extends Phaser.Scene{
 	constructor(){
-		super('2');
+		super('4');
 	}
 
 	init(data) {
@@ -12,11 +12,10 @@ class Scene2 extends Phaser.Scene{
 
 	preload(){
 		
-		this.load.image('background2', 'assets/map/2.png');
-
-		this.load.image('bord4', 'assets/bordure/LEFT&RIGHT.png');
-		this.load.image('bord5', 'assets/bordure/LEFT&RIGHT.png');
-		//this.load.image('bord6', 'assets/bordure/');
+		this.load.image('background4', 'assets/map/4.png');
+		this.load.image('bord10', 'assets/bordure/LEFT&RIGHT.png');
+		this.load.image('bord11', 'assets/bordure/TOP&BOT.png');
+		this.load.image('bord12', 'assets/bordure/LEFT&RIGHT.png');
 
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -38,19 +37,17 @@ class Scene2 extends Phaser.Scene{
  */
 
 	create(){
-		this.add.image(400, 300, 'background2');
+		this.add.image(400, 300, 'background4');
 
 
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.next = this.physics.add.staticGroup();
-		this.next.create(799,300,'bord4');
+		this.next.create(799,300,'bord10');
 		this.next2 = this.physics.add.staticGroup();
-		this.next2.create(1,300,'bord5');
-		/*this.next3 = this.physics.add.staticGroup();
-		this.next3.create(400,599,'bord6');*/
-
-
+		this.next2.create(400,599,'bord11');
+		this.next3 = this.physics.add.staticGroup();
+		this.next3.create(1,300,'bord12');
 
 		this.objet = this.physics.add.staticGroup();
 		//this.objet.create(255,100,'home').setScale(2).refreshBody();
@@ -62,7 +59,7 @@ class Scene2 extends Phaser.Scene{
 		this.physics.add.collider(this.player,this.objet);
 		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
 		this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
-		//this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
+		this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
 
 
 		this.anims.create({
@@ -184,16 +181,15 @@ class Scene2 extends Phaser.Scene{
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
 		}
+
 	}
-
-
 	nextScene(player, next){
-		this.scene.start("3");
+		this.scene.start("5");
 	}
 	next2Scene(player, next2){
-		this.scene.start("1");
+		this.scene.start("10");
 	}
 	next3Scene(player, next3){
-		this.scene.start("");
+		this.scene.start("3");
 	}
 }
