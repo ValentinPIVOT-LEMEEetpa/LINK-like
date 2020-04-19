@@ -16,7 +16,8 @@ class Scene1 extends Phaser.Scene{
 	}
 
 	create(){
-		this.cursors = this.input.keyboard.createCursorKeys();
+		//this.cursors = this.input.keyboard.createCursorKeys();
+		this.cursors = this.input.keyboard.addKey('X');
 		//this.add.text(325, 300, "Loading game...");
 		//this.add.spritesheet(325, 300, "load");
 	
@@ -29,14 +30,12 @@ class Scene1 extends Phaser.Scene{
 			frameRate: 10,
 			
 		});
-		
+		this.lod.anims.play('loading', true);
 	}
 
 	update(){
-		if(this.anims.frames == 18){
-				this.lod.anims.play('loading', true);
-			}else{
-				this.scene.start("playGame");
+			if(this.cursors.isDown){
+				this.scene.start("1");
 			}	
 		}
 }
