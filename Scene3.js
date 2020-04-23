@@ -9,7 +9,6 @@ class Scene3 extends Phaser.Scene{
 		var text;
 		var objet;
 		var ennemi;
-		var vie = 3;
 	}
 
 	preload(){
@@ -26,10 +25,10 @@ class Scene3 extends Phaser.Scene{
 		this.load.spritesheet('back', 'assets/personnage/aragorn/ALIVE/aragorn_BACK-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('front', 'assets/personnage/aragorn/ALIVE/aragorn_FRONT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 
-		this.load.spritesheet('d_right', 'assets/personnage/aragorn/DEAD/aragorn_RIGHT-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
-		this.load.spritesheet('d_left', 'assets/personnage/aragorn/DEAD/aragorn_LEFT-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
-		this.load.spritesheet('d_back', 'assets/personnage/aragorn/DEAD/aragorn_BACK-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
-		this.load.spritesheet('d_front', 'assets/personnage/aragorn/DEAD/aragorn_FRONT-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
+		//this.load.spritesheet('d_right', 'assets/personnage/aragorn/DEAD/aragorn_RIGHT-DEAD-Sheet.png', {frameWidth: 32, frameHeight: 63});
+		//this.load.spritesheet('d_left', 'assets/personnage/aragorn/DEAD/aragorn_LEFT-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
+		//this.load.spritesheet('d_back', 'assets/personnage/aragorn/DEAD/aragorn_BACK-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
+		this.load.spritesheet('d_front', 'assets/personnage/aragorn/DEAD/aragorn_FRONT-DEAD-Sheet.png', {frameWidth: 57, frameHeight: 66});
 
 		this.load.spritesheet('e_right', 'assets/personnage/ennemi/ennemi-1/ALIVE/RIGHT-Sheet.png',{frameWidth: 38, frameHeight: 66});
 		this.load.spritesheet('e_left', 'assets/personnage/ennemi/ennemi-1/ALIVE/LEFT-Sheet.png',{frameWidth: 38, frameHeight: 66});
@@ -112,27 +111,14 @@ class Scene3 extends Phaser.Scene{
 			frameRate: 20
 		});
 
-		this.anims.create({
-			key:'d_left',
-			frames: this.anims.generateFrameNumbers('d_left', {start: 0, end: 3}),
-			frameRate: 10,
-		});
-		this.anims.create({
-			key:'d_right',
-			frames: this.anims.generateFrameNumbers('d_right', {start: 0, end: 3}),
-			frameRate: 10,
-			repeat: 1
-		});
+		
 		this.anims.create({
 			key:'d_front',
-			frames: this.anims.generateFrameNumbers('d_front', {start: 0, end: 3}),
+			frames: this.anims.generateFrameNumbers('d_front', {start: 3, end: 3}),
 			frameRate: 10,
+			repeat: 0
 		});
-		this.anims.create({
-			key:'d_back',
-			frames: this.anims.generateFrameNumbers('d_back', {start: 0, end: 3}),
-			frameRate: 10,
-		});
+		
 
 		this.anims.create({
 			key:'e_left',
@@ -207,8 +193,7 @@ class Scene3 extends Phaser.Scene{
 	
         	if(axisH < 0){
 				this.player.direction = 'left';
-				//this.player.anims.play('left', true);
-				this.player.anims.play('d_right', true);
+				this.player.anims.play('left', true);
 				this.player.setVelocityX(-300);
 
 				this.ennemi.direction = 'right';	
@@ -251,21 +236,10 @@ class Scene3 extends Phaser.Scene{
 			
 	
 			if (pad.Y){
-				this.player.anims.play('d_right', true);
 			}
     	}
 	}
 
-	death(player, ennemi){
-		this.vie =- 1;
-
-		if(this.vie <= 0){
-			this.player.anims.play('d_right', true);
-			alert('t mort batard');
-			//this.scene.pause();
-		}
-
-	}
 
 	nextScene(player, next){
 		this.scene.start("4");

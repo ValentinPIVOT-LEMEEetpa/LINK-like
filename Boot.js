@@ -43,7 +43,7 @@ class Boot extends Phaser.Scene{
 		}
 
 		if (pad.X){
-			this.scene.start('2');
+			this.scene.start('1');
 		}
 	}
 }

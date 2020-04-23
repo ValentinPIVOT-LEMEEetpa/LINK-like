@@ -246,7 +246,16 @@ class Scene1 extends Phaser.Scene{
 				this.player.setVelocityY(0);
 			}
     	}
+    	if (pad.Y){
+			
+    		       
+		}
+
 	}
+
+	
+
+
 
 	nextScene(player, next){
 		this.scene.start("2");
