@@ -13,7 +13,11 @@ class Scene21 extends Phaser.Scene{
 	preload(){
 		
 		this.load.image('background21', 'assets/map/21.png');
+		this.load.image('bord61', 'assets/bordure/LEFT&RIGHT.png');
+		this.load.image('bord62', 'assets/bordure/TOP&BOT.png');
+		this.load.image('bord63', 'assets/bordure/LEFT&RIGHT.png');
 
+		this.load.image('o-tree','assets/decors/arbres-orange.png');
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -35,18 +39,28 @@ class Scene21 extends Phaser.Scene{
 
 	create(){
 		this.add.image(400, 300, 'background21');
+		this.next = this.physics.add.staticGroup();
+		this.next.create(1,300,'bord61');
+		this.next2 = this.physics.add.staticGroup();
+		this.next2.create(400,599,'bord62');
+		this.next3 = this.physics.add.staticGroup();
+		this.next3.create(799,300,'bord63');
 
 
 		this.cursors = this.input.keyboard.createCursorKeys();
 
 		this.objet = this.physics.add.staticGroup();
-		//this.objet.create(255,100,'home').setScale(2).refreshBody();
+		this.objet.create(650,450,'o-tree').setScale(0.5).refreshBody();
+		this.objet.create(200,450,'o-tree').setScale(0.6).refreshBody();
 
 
-		this.player = this.physics.add.sprite(255, 154,'left');
+		this.player = this.physics.add.sprite(400,300,'left');
 		this.player.setCollideWorldBounds(true);
 
 		this.physics.add.collider(this.player,this.objet);
+		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
+		this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
+		this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
 
 
 		this.anims.create({
@@ -143,7 +157,7 @@ class Scene21 extends Phaser.Scene{
     	    this.debug.push(this.axes);
     	    this.debug.push('');
     	}
-    	this.text.setText(this.debug);*/
+    	this.text.setText(this.debug);
 	
 		if(this.cursors.left.isDown){
 			this.player.direction = 'left';
@@ -167,6 +181,51 @@ class Scene21 extends Phaser.Scene{
 			this.player.anims.play('stop', true);
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
-		}
+		}*/
+		if (this.input.gamepad.total === 0)
+    		{
+        		return;
+    		}
+	
+    		var pad = this.input.gamepad.getPad(0);
+	
+    		if (pad.axes.length)
+    		{
+        		var axisH = pad.axes[0].getValue();
+        		var axisV = pad.axes[1].getValue();
+	
+        		if(axisH < 0){
+				this.player.direction = 'left';
+				this.player.anims.play('left', true);
+				this.player.setVelocityX(-300);
+			}else if(axisH > 0){
+				this.player.direction = 'right';	
+				this.player.setVelocityX(300);
+				this.player.anims.play('right', true);
+			}
+			else if(axisV < 0){
+				this.player.direction = 'up';
+				this.player.setVelocityY(-300);
+				this.player.anims.play('back', true);;
+			}else if(axisV > 0){
+				this.player.direction = 'down';
+				this.player.setVelocityY(300);
+				this.player.anims.play('front', true);
+			}
+			else{
+				this.player.anims.play('stop', true);
+				this.player.setVelocityX(0);
+				this.player.setVelocityY(0);
+			}
+    	}
+	}
+	nextScene(player, next){
+		this.scene.start("20");
+	}
+	next2Scene(player, next2){
+		this.scene.start("27");
+	}
+	next3Scene(player, next3){
+		this.scene.start("22");
 	}
 }

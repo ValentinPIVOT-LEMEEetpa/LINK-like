@@ -8,11 +8,15 @@ class Scene2 extends Phaser.Scene{
 		var player;
 		var text;
 		var objet;
+		data.position ;
 	}
 
 	preload(){
 		
 		this.load.image('background2', 'assets/map/2.png');
+
+		this.load.image('loundge', 'assets/decors/MAISON2bleue.png');
+		this.load.image('bush', 'assets/decors/green-bush.png');
 
 		this.load.image('bord4', 'assets/bordure/LEFT&RIGHT.png');
 		this.load.image('bord5', 'assets/bordure/LEFT&RIGHT.png');
@@ -53,10 +57,17 @@ class Scene2 extends Phaser.Scene{
 
 
 		this.objet = this.physics.add.staticGroup();
-		//this.objet.create(255,100,'home').setScale(2).refreshBody();
+		this.objet.create(450,450,'loundge').setScale(2).refreshBody();
+		this.objet.create(75,450,'bush').setScale(0.15).refreshBody();
+		this.objet.create(200,450,'bush').setScale(0.15).refreshBody();
+		this.objet.create(725,450,'bush').setScale(0.15).refreshBody();
 
-
-		this.player = this.physics.add.sprite(255, 154,'left');
+		if(this.position == 1){
+			this.player = this.physics.add.sprite(25,300,'left');
+			this.position = 2;
+		}else{
+			this.player = this.physics.add.sprite(400,300,'left');
+		}
 		this.player.setCollideWorldBounds(true);
 
 		this.physics.add.collider(this.player,this.objet);
@@ -159,7 +170,7 @@ class Scene2 extends Phaser.Scene{
     	    this.debug.push(this.axes);
     	    this.debug.push('');
     	}
-    	this.text.setText(this.debug);*/
+    	this.text.setText(this.debug);
 	
 		if(this.cursors.left.isDown){
 			this.player.direction = 'left';
@@ -184,6 +195,46 @@ class Scene2 extends Phaser.Scene{
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
 		}
+
+		if(this.position == 1){
+			this.player.setPosition(1,300);
+		}*/
+		if (this.input.gamepad.total === 0)
+    		{
+        		return;
+    		}
+	
+    		var pad = this.input.gamepad.getPad(0);
+	
+    		if (pad.axes.length)
+    		{
+        		var axisH = pad.axes[0].getValue();
+        		var axisV = pad.axes[1].getValue();
+	
+        		if(axisH < 0){
+				this.player.direction = 'left';
+				this.player.anims.play('left', true);
+				this.player.setVelocityX(-300);
+			}else if(axisH > 0){
+				this.player.direction = 'right';	
+				this.player.setVelocityX(300);
+				this.player.anims.play('right', true);
+			}
+			else if(axisV < 0){
+				this.player.direction = 'up';
+				this.player.setVelocityY(-300);
+				this.player.anims.play('back', true);;
+			}else if(axisV > 0){
+				this.player.direction = 'down';
+				this.player.setVelocityY(300);
+				this.player.anims.play('front', true);
+			}
+			else{
+				this.player.anims.play('stop', true);
+				this.player.setVelocityX(0);
+				this.player.setVelocityY(0);
+			}
+    	}
 	}
 
 

@@ -13,6 +13,10 @@ class Scene4 extends Phaser.Scene{
 	preload(){
 		
 		this.load.image('background4', 'assets/map/4.png');
+
+		this.load.image('home2','assets/decors/MAISON1orange.png');
+		this.load.image('bush','assets/decors/green-bush.png');
+
 		this.load.image('bord10', 'assets/bordure/LEFT&RIGHT.png');
 		this.load.image('bord11', 'assets/bordure/TOP&BOT.png');
 		this.load.image('bord12', 'assets/bordure/LEFT&RIGHT.png');
@@ -50,10 +54,11 @@ class Scene4 extends Phaser.Scene{
 		this.next3.create(1,300,'bord12');
 
 		this.objet = this.physics.add.staticGroup();
-		//this.objet.create(255,100,'home').setScale(2).refreshBody();
+		this.objet.create(150,475,'home2').setScale(2).refreshBody();
+		this.objet.create(650,475,'bush').setScale(0.25).refreshBody();
 
 
-		this.player = this.physics.add.sprite(255, 154,'left');
+		this.player = this.physics.add.sprite(400,300,'left');
 		this.player.setCollideWorldBounds(true);
 
 		this.physics.add.collider(this.player,this.objet);
@@ -156,7 +161,7 @@ class Scene4 extends Phaser.Scene{
     	    this.debug.push(this.axes);
     	    this.debug.push('');
     	}
-    	this.text.setText(this.debug);*/
+    	this.text.setText(this.debug);
 	
 		if(this.cursors.left.isDown){
 			this.player.direction = 'left';
@@ -180,7 +185,43 @@ class Scene4 extends Phaser.Scene{
 			this.player.anims.play('stop', true);
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
-		}
+		}*/
+		if (this.input.gamepad.total === 0)
+    		{
+        		return;
+    		}
+	
+    		var pad = this.input.gamepad.getPad(0);
+	
+    		if (pad.axes.length)
+    		{
+        		var axisH = pad.axes[0].getValue();
+        		var axisV = pad.axes[1].getValue();
+	
+        		if(axisH < 0){
+				this.player.direction = 'left';
+				this.player.anims.play('left', true);
+				this.player.setVelocityX(-300);
+			}else if(axisH > 0){
+				this.player.direction = 'right';	
+				this.player.setVelocityX(300);
+				this.player.anims.play('right', true);
+			}
+			else if(axisV < 0){
+				this.player.direction = 'up';
+				this.player.setVelocityY(-300);
+				this.player.anims.play('back', true);;
+			}else if(axisV > 0){
+				this.player.direction = 'down';
+				this.player.setVelocityY(300);
+				this.player.anims.play('front', true);
+			}
+			else{
+				this.player.anims.play('stop', true);
+				this.player.setVelocityX(0);
+				this.player.setVelocityY(0);
+			}
+    	}
 
 	}
 	nextScene(player, next){

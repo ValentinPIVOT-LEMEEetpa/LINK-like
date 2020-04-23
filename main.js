@@ -1,6 +1,9 @@
 var config = {
 	width: 800,
 	height: 600,
+	input:{
+		gamepad: true
+	},
 	backgroundColor: 0x000000,
 	physics: {
         default: 'arcade',

@@ -8,6 +8,7 @@ class Scene1 extends Phaser.Scene{
 		var player;
 		var text;
 		var objet;
+		data.position ;
 	}
 
 	preload(){
@@ -15,7 +16,7 @@ class Scene1 extends Phaser.Scene{
 		this.load.image('background1', 'assets/map/1.png');
 
 		this.load.image('home', 'assets/decors/MAISON1bleue.png');
-		this.load.image('fence', 'assets/decors/poteau1.png');
+		this.load.image('wood', 'assets/decors/poteau1.png');
 		this.load.image('bush', 'assets/decors/green-bush.png');
 		this.load.image('tree', 'assets/decors/arbres.png');
 		this.load.image('bord', 'assets/bordure/LEFT&RIGHT.png');
@@ -49,25 +50,27 @@ class Scene1 extends Phaser.Scene{
 
 		this.objet = this.physics.add.staticGroup();
 		this.objet.create(255,100,'home').setScale(2).refreshBody();
-		this.objet.create(560,0,'fence').setScale(0.15).refreshBody();
-		this.objet.create(560,25,'fence').setScale(0.15).refreshBody();
-		this.objet.create(560,50,'fence').setScale(0.15).refreshBody();
-		this.objet.create(560,75,'fence').setScale(0.15).refreshBody();
-		this.objet.create(560,100,'fence').setScale(0.15).refreshBody();
-		this.objet.create(560,125,'fence').setScale(0.15).refreshBody();
-		this.objet.create(360,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(380,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(400,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(420,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(440,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(460,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(480,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(500,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(520,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(540,150,'fence').setScale(0.15).refreshBody();
-		this.objet.create(560,150,'fence').setScale(0.15).refreshBody();
+		this.objet.create(560,0,'wood').setScale(0.15).refreshBody();
+		this.objet.create(560,25,'wood').setScale(0.15).refreshBody();
+		this.objet.create(560,50,'wood').setScale(0.15).refreshBody();
+		this.objet.create(560,75,'wood').setScale(0.15).refreshBody();
+		this.objet.create(560,100,'wood').setScale(0.15).refreshBody();
+		this.objet.create(560,125,'wood').setScale(0.15).refreshBody();
+		this.objet.create(360,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(380,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(400,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(420,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(440,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(460,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(480,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(500,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(520,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(540,150,'wood').setScale(0.15).refreshBody();
+		this.objet.create(560,150,'wood').setScale(0.15).refreshBody();
 		this.objet.create(450,75,'bush').setScale(0.15).refreshBody();
+		this.objet.create(175,225,'bush').setScale(0.05).refreshBody();
 		this.objet.create(635,475,'tree').setScale(0.5).refreshBody();
+		this.objet.create(100,350,'tree').setScale(0.5).refreshBody();
 		//this.objet.create(799,300,'bord');
 
 		this.next = this.physics.add.staticGroup();
@@ -77,7 +80,11 @@ class Scene1 extends Phaser.Scene{
 		/*this.next3 = this.physics.add.staticGroup();
 		this.next3.create(400,599,'bord2');*/
 
-		this.player = this.physics.add.sprite(255, 154,'left');
+
+		this.player = this.physics.add.sprite(255, 200,'left');
+		this.position = 1;
+		
+		
 		this.player.setCollideWorldBounds(true);
 
 		this.physics.add.collider(this.player,this.objet);
@@ -118,8 +125,6 @@ class Scene1 extends Phaser.Scene{
 			frameRate: 20
 		});
 
-
-			this.text = this.add.text(10, 30, '', { font: '16px Courier', fill: '#ffffff' })
 	}
 
 	update(){
@@ -181,7 +186,7 @@ class Scene1 extends Phaser.Scene{
     	    this.debug.push(this.axes);
     	    this.debug.push('');
     	}
-    	this.text.setText(this.debug);*/
+    	this.text.setText(this.debug);
 	
 		if(this.cursors.left.isDown){
 			this.player.direction = 'left';
@@ -204,10 +209,43 @@ class Scene1 extends Phaser.Scene{
 		else{
 			this.player.anims.play('stop', true);
 			this.player.setVelocityX(0);
-			this.player.setVelocityY(0);
-		}
-
-		
+			this.player.setVelocityY(0);*/
+			if (this.input.gamepad.total === 0)
+    		{
+        		return;
+    		}
+	
+    		var pad = this.input.gamepad.getPad(0);
+	
+    		if (pad.axes.length)
+    		{
+        		var axisH = pad.axes[0].getValue();
+        		var axisV = pad.axes[1].getValue();
+	
+        		if(axisH < 0){
+				this.player.direction = 'left';
+				this.player.anims.play('left', true);
+				this.player.setVelocityX(-300);
+			}else if(axisH > 0){
+				this.player.direction = 'right';	
+				this.player.setVelocityX(300);
+				this.player.anims.play('right', true);
+			}
+			else if(axisV < 0){
+				this.player.direction = 'up';
+				this.player.setVelocityY(-300);
+				this.player.anims.play('back', true);;
+			}else if(axisV > 0){
+				this.player.direction = 'down';
+				this.player.setVelocityY(300);
+				this.player.anims.play('front', true);
+			}
+			else{
+				this.player.anims.play('stop', true);
+				this.player.setVelocityX(0);
+				this.player.setVelocityY(0);
+			}
+    	}
 	}
 
 	nextScene(player, next){

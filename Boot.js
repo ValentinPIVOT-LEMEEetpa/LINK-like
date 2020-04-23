@@ -5,8 +5,8 @@ class Boot extends Phaser.Scene{
 
 	init(data) {
 		var cursors;
+		var che;
 		var lod;
-
 	}
 
 	preload(){
@@ -32,11 +32,20 @@ class Boot extends Phaser.Scene{
 		this.lod.anims.play('loading', true);
 	}
 
+	
+
 	update(){
-			if(this.cursors.isDown){
-				this.scene.start("1");
-			}	
+		/*AJOUT DU BOUTTON 'X'*/
+		let pad = Phaser.Input.Gamepad.Gamepad;
+		
+		if (this.input.gamepad.total){
+  			pad = this.input.gamepad.getPad(0);
 		}
+
+		if (pad.X){
+			this.scene.start('2');
+		}
+	}
 }
 
 //this.scene.start("");

@@ -8,6 +8,7 @@ class Scene6 extends Phaser.Scene{
 		var player;
 		var text;
 		var objet;
+		var che;
 	}
 
 	preload(){
@@ -17,6 +18,7 @@ class Scene6 extends Phaser.Scene{
 		//this.load.image('bord17', 'assets/bordure/.png');
 		//this.load.image('bord18', 'assets/bordure/.png');
 
+		this.load.spritesheet('chest', 'assets/decors/CHEST-Sheet.png',{frameWidth: 400, frameHeight: 400});
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -52,15 +54,26 @@ class Scene6 extends Phaser.Scene{
 		this.objet = this.physics.add.staticGroup();
 		//this.objet.create(255,100,'home').setScale(2).refreshBody();
 
+		this.che = this.physics.add.sprite(600,300,'chest').setScale(0.15);
 
-		this.player = this.physics.add.sprite(255, 154,'left');
+		this.player = this.physics.add.sprite(25,300,'left');
 		this.player.setCollideWorldBounds(true);
+		
+		//this.che = this.physics.add.staticGroup();
+		this.che = this.physics.add.overlap(this.player,this.che);
 
 		this.physics.add.collider(this.player,this.objet);
 		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
 		//this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
 		//this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
 
+		
+		this.anims.create({
+			key:'open-chest',
+			frames: this.anims.generateFrameNumbers('chest', {start: 0, end: 3}),
+			frameRate: 10,
+		});
+		//this.che.anims.play('open-chest', true);
 
 		this.anims.create({
 			key:'left',
@@ -156,7 +169,7 @@ class Scene6 extends Phaser.Scene{
     	    this.debug.push(this.axes);
     	    this.debug.push('');
     	}
-    	this.text.setText(this.debug);*/
+    	this.text.setText(this.debug);
 	
 		if(this.cursors.left.isDown){
 			this.player.direction = 'left';
@@ -180,7 +193,43 @@ class Scene6 extends Phaser.Scene{
 			this.player.anims.play('stop', true);
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
-		}
+		}*/
+		if (this.input.gamepad.total === 0)
+    		{
+        		return;
+    		}
+	
+    		var pad = this.input.gamepad.getPad(0);
+	
+    		if (pad.axes.length)
+    		{
+        		var axisH = pad.axes[0].getValue();
+        		var axisV = pad.axes[1].getValue();
+	
+        		if(axisH < 0){
+				this.player.direction = 'left';
+				this.player.anims.play('left', true);
+				this.player.setVelocityX(-300);
+			}else if(axisH > 0){
+				this.player.direction = 'right';	
+				this.player.setVelocityX(300);
+				this.player.anims.play('right', true);
+			}
+			else if(axisV < 0){
+				this.player.direction = 'up';
+				this.player.setVelocityY(-300);
+				this.player.anims.play('back', true);;
+			}else if(axisV > 0){
+				this.player.direction = 'down';
+				this.player.setVelocityY(300);
+				this.player.anims.play('front', true);
+			}
+			else{
+				this.player.anims.play('stop', true);
+				this.player.setVelocityX(0);
+				this.player.setVelocityY(0);
+			}
+    	}
 	}
 	nextScene(player, next){
 		this.scene.start("5");
