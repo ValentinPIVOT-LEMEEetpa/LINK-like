@@ -14,7 +14,7 @@ class Scene30 extends Phaser.Scene{
 		
 		this.load.image('background30', 'assets/map/30.png');
 		this.load.image('bord88', 'assets/bordure/TOP&BOT.png');
-		//this.load.image('bord89', 'assets/bordure/.png');
+		this.load.image('bord89', 'assets/bordure/TOP&BOT.png');
 		//this.load.image('bord90', 'assets/bordure/.png');
 
 		this.load.image('bree','assets/decors/MAISONvillageBREE.png');
@@ -43,9 +43,9 @@ class Scene30 extends Phaser.Scene{
 		this.add.image(400, 300, 'background30');
 		this.next = this.physics.add.staticGroup();
 		this.next.create(400,1,'bord88');
-		/*this.next2 = this.physics.add.staticGroup();
-		this.next2.create(,,'bord89');
-		this.next3 = this.physics.add.staticGroup();
+		this.next2 = this.physics.add.staticGroup();
+		this.next2.create(410,500,'bord89').setScale(0.1).refreshBody();
+		/*this.next3 = this.physics.add.staticGroup();
 		this.next3.create(,,'bord90');*/
 
 
@@ -69,7 +69,7 @@ class Scene30 extends Phaser.Scene{
 
 		this.physics.add.collider(this.player,this.objet);
 		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
-		//this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
+		this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
 		//this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
 
 
@@ -232,10 +232,10 @@ class Scene30 extends Phaser.Scene{
 	nextScene(player, next){
 		this.scene.start("24");
 	}
-	/*next2Scene(player, next2){
-		this.scene.start("");
+	next2Scene(player, next2){
+		this.scene.start("Poney");
 	}
-	next3Scene(player, next3){
+	/*next3Scene(player, next3){
 		this.scene.start("");
 	}*/
 }

@@ -25,6 +25,11 @@ class Scene18 extends Phaser.Scene{
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('back', 'assets/personnage/aragorn/ALIVE/aragorn_BACK-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('front', 'assets/personnage/aragorn/ALIVE/aragorn_FRONT-Sheet.png', {frameWidth: 46, frameHeight: 66});
+	
+		this.load.spritesheet('e_right-4', 'assets/personnage/ennemi/ennemi-4/ALIVE/RIGHT-Sheet.png',{frameWidth: 38, frameHeight: 66});
+		this.load.spritesheet('e_left-4', 'assets/personnage/ennemi/ennemi-4/ALIVE/LEFT-Sheet.png',{frameWidth: 38, frameHeight: 66});
+		this.load.spritesheet('e_back-4', 'assets/personnage/ennemi/ennemi-4/ALIVE/BACK-Sheet.png',{frameWidth: 38, frameHeight: 66});
+		this.load.spritesheet('e_front-4', 'assets/personnage/ennemi/ennemi-4/ALIVE/FRONT-Sheet.png',{frameWidth: 38, frameHeight: 66});
 	}
 
  /*                          .
@@ -67,7 +72,12 @@ class Scene18 extends Phaser.Scene{
 		this.player = this.physics.add.sprite(400,300,'left');
 		this.player.setCollideWorldBounds(true);
 
+		this.ennemi = this.physics.add.sprite(400,700,'e_back-4');
+		this.ennemi = this.physics.add.sprite(200,700,'e_back-4');
+		this.ennemi.setCollideWorldBounds(true);
+
 		this.physics.add.collider(this.player,this.objet);
+		this.physics.add.collider(this.player,this.ennemi);
 		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
 		this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
 		//this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
@@ -101,6 +111,37 @@ class Scene18 extends Phaser.Scene{
 		this.anims.create({
 			key:'stop',
 			frames: [{key: 'front', frame:0}],
+			frameRate: 20
+		});
+
+		this.anims.create({
+			key:'4left',
+			frames: this.anims.generateFrameNumbers('e_left-4', {start: 0, end: 3}),
+			frameRate: 10,
+			repeat: -1
+		});
+		this.anims.create({
+			key:'4right',
+			frames: this.anims.generateFrameNumbers('e_right-4', {start: 0, end: 3}),
+			frameRate: 10,
+			repeat: -1
+		});
+		this.anims.create({
+			key:'4front',
+			frames: this.anims.generateFrameNumbers('e_front-4', {start: 0, end: 3}),
+			frameRate: 10,
+			repeat: -1
+		});
+		this.anims.create({
+			key:'4back',
+			frames: this.anims.generateFrameNumbers('e_back-4', {start: 0, end: 3}),
+			frameRate: 10,
+			repeat: -1
+		});
+
+		this.anims.create({
+			key:'4stop',
+			frames: [{key: 'e_front-4', frame:0}],
 			frameRate: 20
 		});
 

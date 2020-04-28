@@ -8,7 +8,8 @@ class Scene1 extends Phaser.Scene{
 		var player;
 		var text;
 		var objet;
-		data.position ;
+		var changement = 1;
+		var changement2 = 0;
 	}
 
 	preload(){
@@ -40,8 +41,10 @@ class Scene1 extends Phaser.Scene{
  *                     |+ oo| .
  *                     l____j
  */
-
 	create(){
+
+		
+
 		this.add.image(400, 300, 'background1');
 
 		//this.add.image(255, 145, 'home');
@@ -246,15 +249,33 @@ class Scene1 extends Phaser.Scene{
 				this.player.setVelocityY(0);
 			}
     	}
-    	if (pad.Y){
-			
-    		       
-		}
+    	/*CHANGEMENT D'ARME*/
 
+    	if (pad.Y){
+    		if(this.changement = 1 ){
+     			alert('1');
+ 				return this.epee();
+ 				this.changement2 == 1;
+ 				this.changement == 0;
+ 			}
+
+    		if(this.changement2 = 1){
+    			alert('2');
+    			return this.arc();
+    			this.changement == 1;
+    			this.changement2 == 0;
+ 			};
+		}
 	}
 
-	
-
+	epee(){
+ 		//alert('1');
+    	this.text = this.add.text(10, 30, 'sword', { font: '16px Courier', fill: '#ffffff' });
+ 	}
+ 	arc(){
+ 		//alert('2');
+    	this.text = this.add.text(10, 30, 'bow', { font: '16px Courier', fill: '#ffffff' });
+ 	}
 
 
 	nextScene(player, next){
