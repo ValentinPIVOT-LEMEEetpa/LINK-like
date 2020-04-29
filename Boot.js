@@ -35,15 +35,8 @@ class Boot extends Phaser.Scene{
 	
 
 	update(){
-		/*AJOUT DU BOUTTON 'X'*/
-		let pad = Phaser.Input.Gamepad.Gamepad;
-		
-		if (this.input.gamepad.total){
-  			pad = this.input.gamepad.getPad(0);
-		}
-
-		if (pad.X){
-			this.scene.start('18');
+		if (this.cursors.isDown){
+			this.scene.start('1');
 		}
 	}
 }

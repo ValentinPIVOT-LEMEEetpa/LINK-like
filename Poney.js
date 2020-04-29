@@ -71,6 +71,8 @@ class Poney extends Phaser.Scene{
 		//this.objet.create(0,0,'');
 		this.objet.create(100,750,'contour-contoire').setOrigin(0).setScale(0.75).setVisible(false);
 
+		this.cursors = this.input.keyboard.createCursorKeys();
+
 		this.chem = this.physics.add.sprite(1815, 700,'chemine');
 		this.objet.create(1872,700,'struct');
 		this.player = this.physics.add.sprite(100, 1020,'front').setScale(1.4);
@@ -133,40 +135,29 @@ class Poney extends Phaser.Scene{
 	
 
 	update(){
-		if (this.input.gamepad.total === 0){
-        		return;
-    	}
-	
-    	var pad = this.input.gamepad.getPad(0);
-	
-    	if (pad.axes.length){
-        	var axisH = pad.axes[0].getValue();
-        	var axisV = pad.axes[1].getValue();
-
-        	if(axisH < 0){
-				this.player.direction = 'left';
-				this.player.anims.play('left', true);
-				this.player.setVelocityX(-300);
-			}else if(axisH > 0){
-				this.player.direction = 'right';	
-				this.player.setVelocityX(300);
-				this.player.anims.play('right', true);
-			}
-			else if(axisV < 0){
-				this.player.direction = 'up';
-				this.player.setVelocityY(-300);
-				this.player.anims.play('back', true);;
-			}else if(axisV > 0){
-				this.player.direction = 'down';
-				this.player.setVelocityY(300);
-				this.player.anims.play('front', true);
-			}
-			else{
-				this.player.anims.play('stop', true);
-				this.player.setVelocityX(0);
-				this.player.setVelocityY(0);
-			}
-    	}
+		if(this.cursors.left.isDown){
+			this.player.direction = 'left';
+			this.player.anims.play('left', true);
+			this.player.setVelocityX(-300);
+		}else if(this.cursors.right.isDown){
+			this.player.direction = 'right';	
+			this.player.setVelocityX(300);
+			this.player.anims.play('right', true);
+		}
+		else if(this.cursors.up.isDown){
+			this.player.direction = 'up';
+			this.player.setVelocityY(-300);
+			this.player.anims.play('back', true);;
+		}else if(this.cursors.down.isDown){
+			this.player.direction = 'down';
+			this.player.setVelocityY(300);
+			this.player.anims.play('front', true);
+		}
+		else{
+			this.player.anims.play('stop', true);
+			this.player.setVelocityX(0);
+			this.player.setVelocityY(0);
+		}
 	}
 
 	theEnd(player,end){

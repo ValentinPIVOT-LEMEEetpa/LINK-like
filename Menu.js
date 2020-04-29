@@ -12,17 +12,29 @@ class Menu extends Phaser.Scene{
 		this.load.image('quit', 'assets/menu/QUIT.png');
 		this.load.image('logo', 'assets/menu/logo-b.png');
 		this.load.image('select', 'assets/menu/select.png');
+
+		this.load.audio('menu', 'sound/menu.mp3')
 	}
 	
 	create(){
+		this.title=this.sound.add('menu');
+		this.title.play();
+		var musiConfig  = {
+			mute:false,
+			valume:1,
+			rate:1,
+			detune:1,
+			seek:0,
+			loop:true,
+			delay:0
+		}
+
 		this.add.image(400, 300,'menu');/*BACKGROUND*/
 		let playButton = this.add.image(400, 450,'play').setScale(0.50);
 		let quitButton = this.add.image(400,525,'quit').setScale(0.25);
 		let hoverSprite = this.add.image(400,525,'select').setScale(0.1);
 		hoverSprite.setVisible(false);
 		this.add.image(765, 575,'logo').setScale(0.05);
-		
-		/*je n'ai pas reussi a faire en sorte de pouvoir choisir avec la manette*/
 
 		playButton.setInteractive();
 		playButton.on("pointerover",()=>{
@@ -50,8 +62,6 @@ class Menu extends Phaser.Scene{
 			alert('to restart press F5')
 			this.scene.pause();
 		})
-
-		this.text = this.add.text(10, 50, 'Choose what you want with the mouse and then you can play with the controller :)', { font: '16px Courier', fill: '#ffffff' })
 	}
 	
 	update(){

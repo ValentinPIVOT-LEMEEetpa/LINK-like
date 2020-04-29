@@ -17,6 +17,8 @@ class Scene16 extends Phaser.Scene{
 		this.load.image('bord47', 'assets/bordure/TOP&BOT.png');
 		//this.load.image('bord48', 'assets/bordure/.png');
 
+		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
+		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -47,6 +49,9 @@ class Scene16 extends Phaser.Scene{
 */
 
 		this.cursors = this.input.keyboard.createCursorKeys();
+		this.weapon = this.input.keyboard.addKey('A');
+		this.atk = this.input.keyboard.addKey('Z');
+
 
 		this.objet = this.physics.add.staticGroup();
 		//this.objet.create(255,100,'home').setScale(2).refreshBody();
@@ -91,72 +96,36 @@ class Scene16 extends Phaser.Scene{
 			frames: [{key: 'front', frame:0}],
 			frameRate: 20
 		});
+		this.anims.create({
+			key:'atk-right',
+			frames: this.anims.generateFrameNumbers('atk-right', {start: 3, end: 3}),
+			frameRate: 1,
+			repeat: 0
+		});
+		this.anims.create({
+			key:'atk-left',
+			frames: this.anims.generateFrameNumbers('atk-left', {start: 3, end: 3}),
+			frameRate: 1,
+			repeat: 0
+		});
+		this.anims.create({
+			key:'atk-back',
+			frames: this.anims.generateFrameNumbers('atk-back', {start: 0, end: 3}),
+			frameRate:1,
+			repeat: 0
+		});
+		this.anims.create({
+			key:'atk-front',
+			frames: this.anims.generateFrameNumbers('atk-front', {start: 0, end: 3}),
+			frameRate: 1,
+			repeat: 0
+		});
 
 
 			this.text = this.add.text(10, 30, '', { font: '16px Courier', fill: '#ffffff' })
 	}
 
 	update(){
-
-		/*this.debug = [];
-    	this.pads = navigator.getGamepads();
-    	//this.pads = this.input.gamepad.getAll();
-	
-    	for (this.i = 0; this.i < this.pads.length; this.i++){
-    	    this.pad = this.pads[this.i];
-	
-    	    if (!this.pad)
-    	    {
-    	        continue;
-    	    }
-	
-    	    //  Timestamp, index. ID
-    	    this.debug.push(this.pad.id);
-    	    this.debug.push('Index: ' + this.pad.index + ' Timestamp: ' + this.pad.timestamp);
-	
-    	    //  Buttons
-	
-    	    this.buttons = '';
-	
-    	    for (this.b = 0; this.b < this.pad.buttons.length; this.b++)
-    	    {
-    	        this.button = this.pad.buttons[this.b];
-	
-    	        this.buttons = this.buttons.concat('B' + this.button.index + ': ' + this.button.value + '  ');
-    	        // buttons = buttons.concat('B' + b + ': ' + button.value + '  ');
-	
-    	        if (this.b === 8)
-    	        {
-    	            this.debug.push(this.buttons);
-    	            this.buttons = '';
-    	        }
-    	    }
-    	    
-    	    this.debug.push(this.buttons);
-	
-    	    //  Axis
-	
-    	    this.axes = '';
-	
-    	    for (this.a = 0; this.a < this.pad.axes.length; this.a++)
-    	    {
-    	        this.axis = this.pad.axes[this.a];
-	
-    	        this.axes = this.axes.concat('A' + this.axis.index + ': ' + this.axis + '  ');
-    	        // axes = axes.concat('A' + a + ': ' + axis + '  ');
-	
-    	        if (this.a === 1)
-    	        {
-    	            this.debug.push(this.axes);
-    	            this.axes = '';
-    	        }
-    	    }
-    	    
-    	    this.debug.push(this.axes);
-    	    this.debug.push('');
-    	}
-    	this.text.setText(this.debug);
-	
 		if(this.cursors.left.isDown){
 			this.player.direction = 'left';
 			this.player.anims.play('left', true);
@@ -179,44 +148,89 @@ class Scene16 extends Phaser.Scene{
 			this.player.anims.play('stop', true);
 			this.player.setVelocityX(0);
 			this.player.setVelocityY(0);
-		}*/
-		if (this.input.gamepad.total === 0)
-    		{
-        		return;
-    		}
-	
-    		var pad = this.input.gamepad.getPad(0);
-	
-    		if (pad.axes.length)
-    		{
-        		var axisH = pad.axes[0].getValue();
-        		var axisV = pad.axes[1].getValue();
-	
-        		if(axisH < 0){
-				this.player.direction = 'left';
-				this.player.anims.play('left', true);
-				this.player.setVelocityX(-300);
-			}else if(axisH > 0){
-				this.player.direction = 'right';	
-				this.player.setVelocityX(300);
-				this.player.anims.play('right', true);
+		}
+
+    	/*CHANGEMENT D'ARME*/
+        let item_epee = this.add.image(30,30,'slot-epee').setScale(0.5);
+		let item_arc = this.add.image(30,30,'slot-arc').setScale(0.5);
+		item_arc.setVisible(false);
+		item_epee.setVisible(false);
+
+    	if (Phaser.Input.Keyboard.JustDown(this.weapon)){
+            if(this.changement == 1 ){
+                 //alert('arc');
+                 this.changement = 0;
+             }
+
+            else{
+                //alert('epee');
+                this.changement = 1;
+             }
+        }
+
+        if(this.changement == 1){
+        	item_arc.setVisible(false);
+			item_epee.setVisible(true);
+
+			if(Phaser.Input.Keyboard.JustDown(this.atk)){
+				if(this.player.direction == 'right'){
+					this.player.anims.play('atk-right', true);
+				}
+				else if(this.player.direction == 'left'){
+					this.player.anims.play('atk-left', true);
+				}
+				else if(this.player.direction == 'up'){
+					this.player.anims.play('atk-back', true);
+				}
+				else if(this.player.direction == 'down'){
+					this.player.anims.play('atk-front', true);
+				}
+
+
+
 			}
-			else if(axisV < 0){
-				this.player.direction = 'up';
-				this.player.setVelocityY(-300);
-				this.player.anims.play('back', true);;
-			}else if(axisV > 0){
-				this.player.direction = 'down';
-				this.player.setVelocityY(300);
-				this.player.anims.play('front', true);
+        }
+        if(this.changement == 0){
+        	item_epee.setVisible(false);
+			item_arc.setVisible(true);
+
+			if(Phaser.Input.Keyboard.JustDown(this.atk)){
+				if(this.player.direction == 'right'){
+					var coefDir;
+					if (this.player.direction == 'right') { coefDir = 1; } else { coefDir = -1 }
+   					var tire = this.groupeTir.create(this.player.x + (40 * coefDir), this.player.y - 4, 'arrow-right');
+   					tire.setCollideWorldBounds(false);
+   					tire.body.allowGravity = false;
+    				tire.setVelocityX(1000 * coefDir, 0);
+				}
+				else if(this.player.direction == 'left'){
+					var coefDir;
+					if (this.player.direction == 'left') { coefDir = -1; } else { coefDir = 1 }
+   					var tire = this.groupeTir.create(this.player.x + (40 * coefDir), this.player.y - 4, 'arrow-left');
+   					tire.setCollideWorldBounds(false);
+   					tire.body.allowGravity = false;
+    				tire.setVelocityX(1000 * coefDir, 0);
+				}
+				else if(this.player.direction == 'up'){
+					var coefDir;
+					if (this.player.direction == 'up') { coefDir = -1; } else { coefDir = 1 }
+   					var tire = this.groupeTir.create(this.player.x - 4, this.player.y + (60 * coefDir), 'arrow-back');
+   					tire.setCollideWorldBounds(false);
+   					tire.body.allowGravity = false;
+    				tire.setVelocityY(1000 * coefDir, 0);
+				}
+				else if(this.player.direction == 'down'){
+					var coefDir;
+					if (this.player.direction == 'down') { coefDir = 1; } else { coefDir = -1 }
+   					var tire = this.groupeTir.create(this.player.x - 4, this.player.y + (60 * coefDir), 'arrow-front');
+   					tire.setCollideWorldBounds(false);
+   					tire.body.allowGravity = false;
+    				tire.setVelocityY(1000 * coefDir, 0);
+				}
 			}
-			else{
-				this.player.anims.play('stop', true);
-				this.player.setVelocityX(0);
-				this.player.setVelocityY(0);
-			}
-    	}
+        }
 	}
+
 	nextScene(player, next){
 		this.scene.start("10");
 	}
