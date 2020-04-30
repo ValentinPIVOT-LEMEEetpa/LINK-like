@@ -36,7 +36,7 @@ class Boot extends Phaser.Scene{
 
 	update(){
 		if (this.cursors.isDown){
-			this.scene.start('1');
+			this.scene.start('3');
 		}
 	}
 }

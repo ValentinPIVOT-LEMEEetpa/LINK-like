@@ -8,6 +8,10 @@ class Scene5 extends Phaser.Scene{
 		var player;
 		var text;
 		var objet;
+		var changement = 0;
+		var weapon;
+		var atk;
+		var groupeTir;
 	}
 
 	preload(){
@@ -19,6 +23,16 @@ class Scene5 extends Phaser.Scene{
 
 		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
 		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
+
+		this.load.image('arrow-right', 'assets/personnage/aragorn/ATK/arrow-right.png');
+		this.load.image('arrow-left', 'assets/personnage/aragorn/ATK/arrow-left.png');
+		this.load.image('arrow-back', 'assets/personnage/aragorn/ATK/arrow-back.png');
+		this.load.image('arrow-front', 'assets/personnage/aragorn/ATK/arrow-front.png');
+
+		this.load.spritesheet('atk-right', 'assets/personnage/aragorn/ATK/aragorn_RIGHT-Sheet.png', {frameWidth: 69, frameHeight: 66});
+		this.load.spritesheet('atk-left', 'assets/personnage/aragorn/ATK/aragorn_LEFT-Sheet.png', {frameWidth: 69, frameHeight: 66});
+		this.load.spritesheet('atk-front', 'assets/personnage/aragorn/ATK/aragorn_FRONT-Sheet.png', {frameWidth: 46, frameHeight: 66});
+		this.load.spritesheet('atk-back', 'assets/personnage/aragorn/ATK/aragorn_BACK-Sheet.png', {frameWidth: 45.5, frameHeight: 66});
 		
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});

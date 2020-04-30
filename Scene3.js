@@ -9,6 +9,12 @@ class Scene3 extends Phaser.Scene{
 		var text;
 		var objet;
 		var ennemi;
+		var changement = 0;
+		var weapon;
+		var atk;
+		var groupeTir;
+
+		var player_vie = 3;
 	}
 
 	preload(){
@@ -23,14 +29,21 @@ class Scene3 extends Phaser.Scene{
 		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
 		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
 
+		this.load.image('arrow-right', 'assets/personnage/aragorn/ATK/arrow-right.png');
+		this.load.image('arrow-left', 'assets/personnage/aragorn/ATK/arrow-left.png');
+		this.load.image('arrow-back', 'assets/personnage/aragorn/ATK/arrow-back.png');
+		this.load.image('arrow-front', 'assets/personnage/aragorn/ATK/arrow-front.png');
+
+		this.load.spritesheet('atk-right', 'assets/personnage/aragorn/ATK/aragorn_RIGHT-Sheet.png', {frameWidth: 69, frameHeight: 66});
+		this.load.spritesheet('atk-left', 'assets/personnage/aragorn/ATK/aragorn_LEFT-Sheet.png', {frameWidth: 69, frameHeight: 66});
+		this.load.spritesheet('atk-front', 'assets/personnage/aragorn/ATK/aragorn_FRONT-Sheet.png', {frameWidth: 46, frameHeight: 66});
+		this.load.spritesheet('atk-back', 'assets/personnage/aragorn/ATK/aragorn_BACK-Sheet.png', {frameWidth: 45.5, frameHeight: 66});
+
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('back', 'assets/personnage/aragorn/ALIVE/aragorn_BACK-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('front', 'assets/personnage/aragorn/ALIVE/aragorn_FRONT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 
-		//this.load.spritesheet('d_right', 'assets/personnage/aragorn/DEAD/aragorn_RIGHT-DEAD-Sheet.png', {frameWidth: 32, frameHeight: 63});
-		//this.load.spritesheet('d_left', 'assets/personnage/aragorn/DEAD/aragorn_LEFT-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
-		//this.load.spritesheet('d_back', 'assets/personnage/aragorn/DEAD/aragorn_BACK-DEAD-Sheet.png', {frameWidth: 400, frameHeight: 400});
 		this.load.spritesheet('d_front', 'assets/personnage/aragorn/DEAD/aragorn_FRONT-DEAD-Sheet.png', {frameWidth: 57, frameHeight: 66});
 
 		this.load.spritesheet('e_right', 'assets/personnage/ennemi/ennemi-1/ALIVE/RIGHT-Sheet.png',{frameWidth: 38, frameHeight: 66});
@@ -210,8 +223,8 @@ class Scene3 extends Phaser.Scene{
 		}
 
     	/*CHANGEMENT D'ARME*/
-        let item_epee = this.add.image(30,30,'slot-epee').setScale(0.5);
-		let item_arc = this.add.image(30,30,'slot-arc').setScale(0.5);
+        let item_epee = this.add.image(30,90,'slot-epee').setScale(0.5);
+		let item_arc = this.add.image(30,90,'slot-arc').setScale(0.5);
 		item_arc.setVisible(false);
 		item_epee.setVisible(false);
 
@@ -244,9 +257,6 @@ class Scene3 extends Phaser.Scene{
 				else if(this.player.direction == 'down'){
 					this.player.anims.play('atk-front', true);
 				}
-
-
-
 			}
         }
         if(this.changement == 0){
@@ -289,7 +299,6 @@ class Scene3 extends Phaser.Scene{
 			}
         }
 	}
-
 
 	nextScene(player, next){
 		this.scene.start("4");

@@ -33,7 +33,6 @@ class Scene1 extends Phaser.Scene{
 		this.load.image('arrow-back', 'assets/personnage/aragorn/ATK/arrow-back.png');
 		this.load.image('arrow-front', 'assets/personnage/aragorn/ATK/arrow-front.png');
 
-
 		this.load.spritesheet('right', 'assets/personnage/aragorn/ALIVE/aragorn_RIGHT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('left', 'assets/personnage/aragorn/ALIVE/aragorn_LEFT-Sheet.png', {frameWidth: 46, frameHeight: 66});
 		this.load.spritesheet('back', 'assets/personnage/aragorn/ALIVE/aragorn_BACK-Sheet.png', {frameWidth: 46, frameHeight: 66});
@@ -102,9 +101,7 @@ class Scene1 extends Phaser.Scene{
 
 		
 
-		this.player = this.physics.add.sprite(255, 200,'left');
-		this.position = 1;
-		
+		this.player = this.physics.add.sprite(255, 200,'left');		
 		
 		this.player.setCollideWorldBounds(true);
 
@@ -235,9 +232,6 @@ class Scene1 extends Phaser.Scene{
 				else if(this.player.direction == 'down'){
 					this.player.anims.play('atk-front', true);
 				}
-
-
-
 			}
         }
         if(this.changement == 0){
