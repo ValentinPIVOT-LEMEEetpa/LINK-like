@@ -13,6 +13,7 @@ class Scene3 extends Phaser.Scene{
 		var weapon;
 		var atk;
 		var groupeTir;
+		var arrow = 0;
 
 		var player_vie = 3;
 	}
@@ -28,6 +29,11 @@ class Scene3 extends Phaser.Scene{
 
 		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
 		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
+
+		this.load.image('keur-full', 'assets/HUD/KEUR/keurs1.png');
+		this.load.image('keur-1/4', 'assets/HUD/KEUR/keurs2.png');
+		this.load.image('keur-1/2', 'assets/HUD/KEUR/keurs3.png');
+		this.load.image('keur-null', 'assets/HUD/KEUR/keurs4.png');
 
 		this.load.image('arrow-right', 'assets/personnage/aragorn/ATK/arrow-right.png');
 		this.load.image('arrow-left', 'assets/personnage/aragorn/ATK/arrow-left.png');
@@ -84,6 +90,10 @@ class Scene3 extends Phaser.Scene{
 		this.objet.create(650,450,'tree').setScale(0.5).refreshBody();
 		this.objet.create(200,450,'tree').setScale(0.6).refreshBody();
 
+		this.item = this.physics.add.staticGroup();
+
+		this.hud = this.physics.add.staticGroup();
+		this.hud.create(30, 30, 'keur-full').setScale(0.75).refreshBody();
 
 		this.player = this.physics.add.sprite(400,300,'left');
 		this.player.setCollideWorldBounds(true);
@@ -94,10 +104,13 @@ class Scene3 extends Phaser.Scene{
 		this.physics.add.collider(this.player,this.objet);
 		this.physics.add.collider(this.ennemi,this.objet);
 		this.physics.add.collider(this.ennemi,this.player,this.death,null,this);
+		this.physics.add.collider(this.item,this.player,this.collect,null,this);
 
 		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
 		this.physics.add.collider(this.player,this.next2,this.next2Scene,null,this);
 		this.physics.add.collider(this.player,this.next3,this.next3Scene,null,this);
+
+		this.objet.create(500,500,'arrow-front').setScale(0.15).refreshBody();
 
 
 		this.anims.create({
@@ -193,8 +206,11 @@ class Scene3 extends Phaser.Scene{
 			repeat: 0
 		});
 
-			this.text = this.add.text(10, 30, '', { font: '16px Courier', fill: '#ffffff' })
+		//this.text = this.add.text(10, 30, 'arrow:', { font: '16px Courier', fill: '#ffffff' })
 
+		//deplacment aleatoire pour l'ennemi genere un nombre aleatoire qui defini le deplacement de l'ennemi
+
+	
 	}
 
 	update(){
@@ -247,6 +263,7 @@ class Scene3 extends Phaser.Scene{
 			if(Phaser.Input.Keyboard.JustDown(this.atk)){
 				if(this.player.direction == 'right'){
 					this.player.anims.play('atk-right', true);
+					this.death()
 				}
 				else if(this.player.direction == 'left'){
 					this.player.anims.play('atk-left', true);
@@ -267,7 +284,7 @@ class Scene3 extends Phaser.Scene{
 				if(this.player.direction == 'right'){
 					var coefDir;
 					if (this.player.direction == 'right') { coefDir = 1; } else { coefDir = -1 }
-   					var tire = this.groupeTir.create(this.player.x + (40 * coefDir), this.player.y - 4, 'arrow-right');
+   					var tire = this.groupeTir.create(this.player.x + (40 * coefDir), this.player.y - 4, 'arrow-right3');
    					tire.setCollideWorldBounds(false);
    					tire.body.allowGravity = false;
     				tire.setVelocityX(1000 * coefDir, 0);
@@ -275,7 +292,7 @@ class Scene3 extends Phaser.Scene{
 				else if(this.player.direction == 'left'){
 					var coefDir;
 					if (this.player.direction == 'left') { coefDir = -1; } else { coefDir = 1 }
-   					var tire = this.groupeTir.create(this.player.x + (40 * coefDir), this.player.y - 4, 'arrow-left');
+   					var tire = this.groupeTir.create(this.player.x + (40 * coefDir), this.player.y - 4, 'arrow-left3');
    					tire.setCollideWorldBounds(false);
    					tire.body.allowGravity = false;
     				tire.setVelocityX(1000 * coefDir, 0);
@@ -283,7 +300,7 @@ class Scene3 extends Phaser.Scene{
 				else if(this.player.direction == 'up'){
 					var coefDir;
 					if (this.player.direction == 'up') { coefDir = -1; } else { coefDir = 1 }
-   					var tire = this.groupeTir.create(this.player.x - 4, this.player.y + (60 * coefDir), 'arrow-back');
+   					var tire = this.groupeTir.create(this.player.x - 4, this.player.y + (60 * coefDir), 'arrow-back3');
    					tire.setCollideWorldBounds(false);
    					tire.body.allowGravity = false;
     				tire.setVelocityY(1000 * coefDir, 0);
@@ -291,7 +308,7 @@ class Scene3 extends Phaser.Scene{
 				else if(this.player.direction == 'down'){
 					var coefDir;
 					if (this.player.direction == 'down') { coefDir = 1; } else { coefDir = -1 }
-   					var tire = this.groupeTir.create(this.player.x - 4, this.player.y + (60 * coefDir), 'arrow-front');
+   					var tire = this.groupeTir.create(this.player.x - 4, this.player.y + (60 * coefDir), 'arrow-front3');
    					tire.setCollideWorldBounds(false);
    					tire.body.allowGravity = false;
     				tire.setVelocityY(1000 * coefDir, 0);
@@ -299,6 +316,19 @@ class Scene3 extends Phaser.Scene{
 			}
         }
 	}
+
+	death(player,ennemi){
+		this.ennemi.setVisible(false);
+		this.ennemi.destroy(false);
+		this.item.create(this.ennemi.x, this.ennemi.y, 'arrow-left');
+	}
+
+	/*collect(player,item){
+		this.item.setVisible(false);
+		this.item.destroy(false);
+		this.arrow += 1;
+		this.text.setText('arrow :' + this.arrow)
+	}*/
 
 	nextScene(player, next){
 		this.scene.start("4");

@@ -29,6 +29,11 @@ class Scene2 extends Phaser.Scene{
 		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
 		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
 
+		this.load.image('keur-full', 'assets/HUD/KEUR/keurs1.png');
+		this.load.image('keur-1/4', 'assets/HUD/KEUR/keurs2.png');
+		this.load.image('keur-1/2', 'assets/HUD/KEUR/keurs3.png');
+		this.load.image('keur-null', 'assets/HUD/KEUR/keurs4.png');
+
 		this.load.image('arrow-right', 'assets/personnage/aragorn/ATK/arrow-right.png');
 		this.load.image('arrow-left', 'assets/personnage/aragorn/ATK/arrow-left.png');
 		this.load.image('arrow-back', 'assets/personnage/aragorn/ATK/arrow-back.png');
@@ -80,6 +85,7 @@ class Scene2 extends Phaser.Scene{
 		this.objet.create(75,450,'bush').setScale(0.15).refreshBody();
 		this.objet.create(200,450,'bush').setScale(0.15).refreshBody();
 		this.objet.create(725,450,'bush').setScale(0.15).refreshBody();
+		
 
 		if(this.position == 1){
 			this.player = this.physics.add.sprite(25,300,'left');
@@ -88,6 +94,9 @@ class Scene2 extends Phaser.Scene{
 			this.player = this.physics.add.sprite(400,300,'left');
 		}
 		this.player.setCollideWorldBounds(true);
+
+		this.hud = this.physics.add.staticGroup();
+		this.hud.create(30, 30, 'keur-full').setScale(0.75).refreshBody();
 
 		this.physics.add.collider(this.player,this.objet);
 		this.physics.add.collider(this.player,this.next,this.nextScene,null,this);
@@ -180,8 +189,8 @@ class Scene2 extends Phaser.Scene{
 		}
 
     	/*CHANGEMENT D'ARME*/
-        let item_epee = this.add.image(30,30,'slot-epee').setScale(0.5);
-		let item_arc = this.add.image(30,30,'slot-arc').setScale(0.5);
+        let item_epee = this.add.image(30,90,'slot-epee').setScale(0.5);
+		let item_arc = this.add.image(30,90,'slot-arc').setScale(0.5);
 		item_arc.setVisible(false);
 		item_epee.setVisible(false);
 

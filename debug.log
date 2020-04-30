@@ -1,0 +1,4 @@
+[0430/041704.665:ERROR:process_reader_win.cc(123)] NtOpenThread: {Accès refusé} Un processus a demandé l’accès a un objet, mais il ne bénéficie pas des autorisations nécessaires. (0xc0000022)
+[0430/041704.688:ERROR:process_reader_win.cc(123)] NtOpenThread: {Accès refusé} Un processus a demandé l’accès a un objet, mais il ne bénéficie pas des autorisations nécessaires. (0xc0000022)
+[0430/041704.727:ERROR:exception_snapshot_win.cc(98)] thread ID 6348 not found in process
+[0430/041704.726:ERROR:exception_snapshot_win.cc(98)] thread ID 4584 not found in process

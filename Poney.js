@@ -26,6 +26,9 @@ class Poney extends Phaser.Scene{
 		this.load.image('tapis','assets/poney/tapis.png');
 		this.load.image('tonneau','assets/poney/tonneau.png');
 		this.load.image('struct','assets/poney/struct.png');
+
+		this.load.video('ending', 'video/fin.mp4');
+
 		this.load.spritesheet('cheminee','assets/poney/cheminee-Sheet.png', {frameWidth: 200, frameHeight: 200});
 		this.load.spritesheet('chemine','assets/poney/chemine.png', {frameWidth: 213, frameHeight: 300});
 
@@ -161,7 +164,10 @@ class Poney extends Phaser.Scene{
 	}
 
 	theEnd(player,end){
-		alert("c'est la fin");
+		alert("normalement ca lance une video mais c'est la fin du jeu");
+		this.video = this.add.video('ending');
+    	this.video.play(true);
+    	this.physics.pause();
 	}
 }
 

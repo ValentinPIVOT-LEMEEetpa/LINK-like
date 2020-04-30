@@ -24,6 +24,11 @@ class Scene27 extends Phaser.Scene{
 		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
 		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
 
+		this.load.image('keur-full', 'assets/HUD/KEUR/keurs1.png');
+		this.load.image('keur-1/4', 'assets/HUD/KEUR/keurs2.png');
+		this.load.image('keur-1/2', 'assets/HUD/KEUR/keurs3.png');
+		this.load.image('keur-null', 'assets/HUD/KEUR/keurs4.png');
+
 		this.load.image('arrow-right', 'assets/personnage/aragorn/ATK/arrow-right.png');
 		this.load.image('arrow-left', 'assets/personnage/aragorn/ATK/arrow-left.png');
 		this.load.image('arrow-back', 'assets/personnage/aragorn/ATK/arrow-back.png');
@@ -78,6 +83,10 @@ class Scene27 extends Phaser.Scene{
 
 		this.player = this.physics.add.sprite(400,300,'left');
 		this.player.setCollideWorldBounds(true);
+
+		this.hud = this.physics.add.staticGroup();
+		this.hud.create(30, 30, 'keur-full').setScale(0.75).refreshBody();
+		
 		this.ennemi = this.physics.add.sprite(100,100,'e_right-3');
 		this.ennemi = this.physics.add.sprite(300,650,'e_back-3');
 		this.ennemi.setCollideWorldBounds(true);

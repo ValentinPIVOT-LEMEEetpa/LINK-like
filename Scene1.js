@@ -28,6 +28,11 @@ class Scene1 extends Phaser.Scene{
 		this.load.image('slot-epee', 'assets/HUD/slot-epee.png');
 		this.load.image('slot-arc', 'assets/HUD/slot-arc.png');
 
+		this.load.image('keur-full', 'assets/HUD/KEUR/keurs1.png');
+		this.load.image('keur-1/4', 'assets/HUD/KEUR/keurs2.png');
+		this.load.image('keur-1/2', 'assets/HUD/KEUR/keurs3.png');
+		this.load.image('keur-null', 'assets/HUD/KEUR/keurs4.png');
+
 		this.load.image('arrow-right', 'assets/personnage/aragorn/ATK/arrow-right.png');
 		this.load.image('arrow-left', 'assets/personnage/aragorn/ATK/arrow-left.png');
 		this.load.image('arrow-back', 'assets/personnage/aragorn/ATK/arrow-back.png');
@@ -58,6 +63,7 @@ class Scene1 extends Phaser.Scene{
  */
 	create(){
 		this.add.image(400, 300, 'background1');
+
 
 		//this.add.image(255, 145, 'home');
 
@@ -99,6 +105,8 @@ class Scene1 extends Phaser.Scene{
 		/*this.next3 = this.physics.add.staticGroup();
 		this.next3.create(400,599,'bord2');*/
 
+		this.hud = this.physics.add.staticGroup();
+		this.hud.create(30, 30, 'keur-full').setScale(0.75).refreshBody();
 		
 
 		this.player = this.physics.add.sprite(255, 200,'left');		
@@ -198,8 +206,8 @@ class Scene1 extends Phaser.Scene{
 		}
 
     	/*CHANGEMENT D'ARME*/
-        let item_epee = this.add.image(30,30,'slot-epee').setScale(0.5);
-		let item_arc = this.add.image(30,30,'slot-arc').setScale(0.5);
+        let item_epee = this.add.image(30,90,'slot-epee').setScale(0.5);
+		let item_arc = this.add.image(30,90,'slot-arc').setScale(0.5);
 		item_arc.setVisible(false);
 		item_epee.setVisible(false);
 
